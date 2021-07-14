@@ -10,16 +10,17 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView text1,text2;
-    CheckBox chkAgree;
+    Switch chkAgree;
     RadioGroup rGroup1;
-    RadioButton rdoDOg,rdoCat,rdoRabbit;
-    Button btnOk;
+    RadioButton rdoO,rdoPi,rdoQ;
+    Button fisnish,returnto;
     ImageView imgPet;
 
     @Override
@@ -32,11 +33,12 @@ public class MainActivity extends AppCompatActivity {
         text2 = findViewById(R.id.Text2);
         chkAgree = findViewById(R.id.ChkAgree);
         rGroup1 = findViewById(R.id.Rgroup1);
-        rdoDOg = findViewById(R.id.RdoDog);
-        rdoCat = findViewById(R.id.RdoCat);
-        rdoRabbit = findViewById(R.id.RdoRabbit);
-        btnOk = findViewById(R.id.btnOk);
+        fisnish = findViewById(R.id.finish);
+        returnto = findViewById(R.id.re);
         imgPet = findViewById(R.id.ImgPet);
+        rdoO = findViewById(R.id.RdoO);
+        rdoPi = findViewById(R.id.RdoPI);
+        rdoQ = findViewById(R.id.RdoQ);
 
         chkAgree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -44,34 +46,48 @@ public class MainActivity extends AppCompatActivity {
                 if(chkAgree.isChecked()){
                     text2.setVisibility(View.VISIBLE);
                     rGroup1.setVisibility(View.VISIBLE);
-                    btnOk.setVisibility(View.VISIBLE);
+                    fisnish.setVisibility(View.VISIBLE);
+                    returnto.setVisibility(View.VISIBLE);
                     imgPet.setVisibility(View.VISIBLE);
                 }
                 else{
                     text2.setVisibility(View.INVISIBLE);
                     rGroup1.setVisibility(View.INVISIBLE);
-                    btnOk.setVisibility(View.INVISIBLE);
+                    fisnish.setVisibility(View.INVISIBLE);
+                    returnto.setVisibility(View.INVISIBLE);
                     imgPet.setVisibility(View.INVISIBLE);
                 }
             }
         });
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (rGroup1.getCheckedRadioButtonId()){
-                    case R.id.RdoDog:
-                        imgPet.setImageResource(R.drawable.dog);
-                        break;
-                    case R.id.RdoCat:
-                        imgPet.setImageResource(R.drawable.cat);
-                        break;
-                    case R.id.RdoRabbit:
-                        imgPet.setImageResource(R.drawable.rabbit);
-                        break;
-                    default:
-                        Toast.makeText(MainActivity.this, "동물을 먼저 선택하세요", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        rdoO.setOnClickListener(this);
+        rdoPi.setOnClickListener(this);
+        rdoQ.setOnClickListener(this);
+        fisnish.setOnClickListener(this);
+        returnto.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.RdoO:
+                imgPet.setImageResource(R.drawable.oreo);
+                break;
+            case R.id.RdoPI:
+                imgPet.setImageResource(R.drawable.pie);
+                break;
+            case R.id.RdoQ:
+                imgPet.setImageResource(R.drawable.q10);
+                break;
+            case R.id.re:
+                chkAgree.setChecked(false);
+                imgPet.setImageResource(0);
+                rGroup1.clearCheck();
+                break;
+            case R.id.finish:
+                System.exit(0);
+                break;
+
+        }
     }
 }
